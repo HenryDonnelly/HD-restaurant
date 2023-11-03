@@ -26,9 +26,16 @@
         </tr>
 
         <tr>
+            <td><strong> Best before </strong> </td>
+            <td>{{$food->best_before}}</td>
+        </tr>
+
+        <tr>
             <td><strong> picture </strong> </td>
             <td>{{$food->picture}}</td>
         </tr>
+
+
 
     </tbody>
 </table>
