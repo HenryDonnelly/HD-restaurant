@@ -21,7 +21,8 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+        return view('foods.create');
+        return to_route('foods.index', $food)->with('success', 'Food successfully created');
     }
 
     /**
@@ -29,7 +30,26 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'category'=> 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'best_before' => 'required',
+            'picture' => 'nullable|image|mimes:jpeg,png,bmp,jpg,gif|max:2048',
+        ]);
+
+        Food::create([
+            'name' => $request->name,
+            'category' => $request->category,
+            'description' => $request->description,
+            'price' => $request->price,
+            'best_before' => $request->best_before,
+            'picture' => $picture_name,
+            'created_at' =>now(),
+            'updated_at' =>now(),
+        ]);
+        return to_route('foods.index');
     }
 
     /**
@@ -43,24 +63,50 @@ class FoodController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Food $food)
     {
-        //
+      //  $food = Food::get($food->id);
+        return view('foods.edit')->with('food', $food);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Food $food)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'category' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'best_before' => 'required',
+             'picture' => 'required',
+        ]);
+        // if($request->hasFile('picture')){
+        //     $picture=$request->file('picture');
+        //     $pictureName=time() . "." . $picture->extension();
+        //     $picture->storeAs('public/foods',$pictureName);
+        //     $food_picture_name='storage/foods/' . $pictureName;
+        // }
+        $food->update([
+            'name' => $request->name,
+            'category' => $request->category,
+            'description' => $request->description,
+            'price' => $request->price,
+            'best_before' => $request->best_before,
+            'picture' => $request->picture,
+        ]);
+
+        return to_route('foods.show', $food)->with('success', 'Food successfully updated');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Food $food)
     {
-        //
+        $food->delete();
+        return to_route('foods.index')->with('success','food deleted successfully');
     }
 }

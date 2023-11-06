@@ -21,6 +21,11 @@
                         {{ __('All Food') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('foods.create')" :active="request()->routeIs('foods.create')">
+                        {{ __('Create Food') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
