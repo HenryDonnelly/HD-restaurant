@@ -61,12 +61,15 @@
                 </span>
             @endif
         </div>
-        <X-file-input type="file"
-        name="book_image"
-        placeholder="food"
-        class="w-full mt-6"
-        field="picture"
-        ></X-file-input>
+        <div class="form-group">
+            <label for="picture">Food picture</label>
+            <input type="file" name="picture" id="picture" class="form-control {{ $errors->has('picture') ? 'is-invalid' : '' }}">
+            @if($errors->has('picture'))
+                <span class="invalid-feedback">
+                    {{ $errors->first('picture') }}
+                </span>
+            @endif
+        </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
 @endsection

@@ -32,12 +32,21 @@ class FoodController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'category'=> 'required',
+            'category' => 'required',
             'description' => 'required',
             'price' => 'required',
             'best_before' => 'required',
             'picture' => 'nullable|image|mimes:jpeg,png,bmp,jpg,gif|max:2048',
         ]);
+
+        $food_picture_name = null;
+
+        if ($request->hasFile('picture')) {
+            $picture = $request->file('picture');
+            $pictureName = time() . '.' . $picture->extension();
+            $picture->storeAs('public/foods', $pictureName);
+            $food_picture_name = 'storage/foods/' . $pictureName;
+        }
 
         Food::create([
             'name' => $request->name,
@@ -45,11 +54,12 @@ class FoodController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'best_before' => $request->best_before,
-            'picture' => $picture_name,
-            'created_at' =>now(),
-            'updated_at' =>now(),
+            'picture' => $food_picture_name,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
-        return to_route('foods.index');
+
+        return redirect()->route('foods.index');
     }
 
     /**
@@ -72,35 +82,37 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Food $food)
-    {
-        $request->validate([
-            'name' => 'required',
-            'category' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'best_before' => 'required',
-             'picture' => 'required',
-        ]);
-        // if($request->hasFile('picture')){
-        //     $picture=$request->file('picture');
-        //     $pictureName=time() . "." . $picture->extension();
-        //     $picture->storeAs('public/foods',$pictureName);
-        //     $food_picture_name='storage/foods/' . $pictureName;
-        // }
-        $food->update([
-            'name' => $request->name,
-            'category' => $request->category,
-            'description' => $request->description,
-            'price' => $request->price,
-            'best_before' => $request->best_before,
-            'picture' => $request->picture,
-        ]);
 
-        return to_route('foods.show', $food)->with('success', 'Food successfully updated');
+     public function update(Request $request, Food $food)
+     {
+         $request->validate([
+             'name' => 'required',
+             'category' => 'required',
+             'description' => 'required',
+             'price' => 'required',
+             'best_before' => 'required',
+         ]);
 
-    }
+         $food_picture_name = $food->picture;
 
+         if ($request->hasFile('picture')) {
+             $picture = $request->file('picture');
+             $pictureName = time() . '.' . $picture->extension();
+             $picture->storeAs('public/foods', $pictureName);
+             $food_picture_name = 'storage/foods/' . $pictureName;
+         }
+
+         $food->update([
+             'name' => $request->name,
+             'category' => $request->category,
+             'description' => $request->description,
+             'price' => $request->price,
+             'best_before' => $request->best_before,
+             'picture' => $food_picture_name,
+         ]);
+
+         return redirect()->route('foods.show', $food)->with('success', 'Food successfully updated');
+     }
     /**
      * Remove the specified resource from storage.
      */

@@ -56,9 +56,8 @@
             @endif
         </div>
         <div class="form-group">
-            <label for="picture">Food Picture</label>
-            <input type="text" name="picture" id="picture" class="form-control {{ $errors->has('picture') ? 'is-invalid' : '' }}"
-                   value="{{ old('picture') }}" placeholder="Enter food picture">
+            <label for="picture">Food picture</label>
+            <input type="file" name="picture" id="picture" class="form-control {{ $errors->has('picture') ? 'is-invalid' : '' }}">
             @if($errors->has('picture'))
                 <span class="invalid-feedback">
                     {{ $errors->first('picture') }}

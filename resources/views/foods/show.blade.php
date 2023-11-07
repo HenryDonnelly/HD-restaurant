@@ -19,13 +19,13 @@
         </tr>
 
         <tr>
-            <td><strong> description </strong> </td>
-            <td>{{$food->description}}</td>
+            <td><strong> category </strong> </td>
+            <td>{{$food->category}}</td>
         </tr>
 
         <tr>
-            <td><strong> category </strong> </td>
-            <td>{{$food->category}}</td>
+            <td><strong> description </strong> </td>
+            <td>{{$food->description}}</td>
         </tr>
 
         <tr>
@@ -40,7 +40,7 @@
 
         <tr>
             <td><strong> picture </strong> </td>
-            <td>{{$food->picture}}</td>
+            <td><img src="{{ asset($food->picture) }}" class="img-fluid" alt="food Image"></td>
         </tr>
 
 
