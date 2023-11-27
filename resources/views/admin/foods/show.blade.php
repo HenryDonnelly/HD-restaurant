@@ -47,8 +47,8 @@
 
     </tbody>
 </table>
-<a href="{{ route('foods.edit', $food)}}">Edit</a>
-<form action="{{route ('foods.destroy', $food)}}" method="post">
+<a href="{{ route('admin.foods.edit', $food)}}">Edit</a>
+<form action="{{route ('admin.foods.destroy', $food)}}" method="post">
     @method('delete')
     @csrf
     <x-primary-button onclick="return confirm('are you sure you want to delete?')">Delete</x-primary-button>

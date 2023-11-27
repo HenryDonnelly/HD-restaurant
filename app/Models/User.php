@@ -14,7 +14,7 @@ class User extends Authenticatable
     {
         return$this->belongsToMany('App\Models\Role','user_role');
     }
-    
+
     public function authorizeRoles($roles)
     {
         if(is_array($roles)){

@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FoodController;
-use App\Http\Controllers\FoodController as AdminFoodController;
-use App\Http\Controllers\FoodController as UserFoodController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\FoodController as AdminFoodController;
+use App\Http\Controllers\User\FoodController as UserFoodController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +33,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::resource('foods', FoodController::class);
 
-Route::resource('/Admin/foods', AdminFoodController::class)->middleware(['auth'])->names('Admin.foods');
-Route::resource('/User/foods', UserFoodController::class)->middleware(['auth'])->names('User.foods')->only(['index','show']);
+// Route::resource('App\Http\Controllers\User\FoodController');
+// Route::resource('App\Http\Controllers\Admin\FoodController');
+
+Route::resource('/admin/foods', AdminFoodController::class)->middleware(['auth'])->names('admin.foods');
+Route::resource('/user/foods', UserFoodController::class)->middleware(['auth'])->names('user.foods')->only(['index','show']);
 
 require __DIR__.'/auth.php';

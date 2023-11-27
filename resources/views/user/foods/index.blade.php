@@ -16,7 +16,7 @@
             <tbody>
                 @foreach ($foods as $food)
                     <tr>
-                        <td><a href="{{ route ('foods.show', $food)}}">{{ $food->name }}</a></td>
+                        <td><a href="{{ route ('user.foods.show', $food)}}">{{ $food->name }}</a></td>
                         <td>{{ $food->description }}</td>
                         <td>{{ $food->category }}</td>
                         <td>{{ $food->price }}</td>

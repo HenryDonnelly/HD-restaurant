@@ -1,9 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="py-12">
+    <div class="max-w-7x1 mx-auto sm:px-6 lg:px-8">
+        <x-alert-success>
+            {{session('success')}}
+        </x-alert-success>
+    </div>
+</div>
     <h3 class="text-center">Create food</h3>
-    <form action="{{ route('foods.update', $food)}}" method="post" enctype="multipart/form-data">
-        @method('put')
+    <form action="{{ route('admin.foods.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">Food Name</label>
@@ -69,3 +75,62 @@
 @endsection
 
 
+{{-- <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Create Food') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
+                <form action="{{ route('admin.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <x-text-input
+                        type="text"
+                        name="name"
+                        field="name"
+                        placeholder="name"
+                        class="w-full"
+                        autocomplete="off"
+                        :value="@old('name')"></x-text-input>
+
+                    <x-text-input
+                        type="text"
+                        name="category"
+                        field="category"
+                        placeholder="category..."
+                        class="w-full mt-6"
+                        :value="@old('category')"></x-text-input>
+
+                    <!-- I created a new component called textarea, you will need to do the same to using the x-textarea component -->
+                    <x-textarea
+                        name="description"
+                        rows="10"
+                        field="description"
+                        placeholder="Description..."
+                        class="w-full mt-6"
+                        :value="@old('description')">
+                    </x-textarea>
+
+                    <x-textarea
+                    name="price"
+                    rows="10"
+                    field="price"
+                    placeholder="price..."
+                    class="w-full mt-6"
+                    :value="@old('price')">
+                </x-textarea>
+
+                    <div class="form-group">
+                        <label for="title">food name</label>
+                        <input type="text" name="title" id="title" class="form-control"{{$errors->has('title') ? 'is-invalid' : ''}}>
+                    </div>
+
+                    <x-primary-button class="mt-6">Save food</x-primary-button>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout> --}}

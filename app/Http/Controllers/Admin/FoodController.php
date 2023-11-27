@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Food;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
@@ -12,8 +14,10 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods=Food::all();
-        return view('foods.index', compact ('foods'));
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+        $foods=Food::paginate(10);
+        return view('admin.foods.index')->with('foods',$foods);
     }
 
     /**
@@ -21,8 +25,9 @@ class FoodController extends Controller
      */
     public function create()
     {
-        return view('foods.create');
-        return to_route('foods.index', $food)->with('success', 'Food successfully created');
+        $user=Auth::user();
+        $user->authorizeRoles('admin');
+        return view('admin.foods.create');
     }
 
     /**
@@ -59,7 +64,7 @@ class FoodController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('foods.index');
+        return to_route('admin.foods.index') ->with ('success','food stored');
     }
 
     /**
@@ -67,7 +72,9 @@ class FoodController extends Controller
      */
     public function show(Food $food)
     {
-        return view('foods.show')->with('food', $food);
+        $user=Auth::user();
+      $user->authorizeRoles('admin');
+        return view('admin.foods.show')->with('food', $food);
     }
 
     /**
@@ -76,7 +83,9 @@ class FoodController extends Controller
     public function edit(Food $food)
     {
       //  $food = Food::get($food->id);
-        return view('foods.edit')->with('food', $food);
+      $user=Auth::user();
+      $user->authorizeRoles('admin');
+        return view('admin.foods.edit')->with('food', $food);
     }
 
     /**
@@ -118,7 +127,9 @@ class FoodController extends Controller
      */
     public function destroy(Food $food)
     {
+        $user=Auth::user();
+      $user->authorizeRoles('admin');
         $food->delete();
-        return to_route('foods.index')->with('success','food deleted successfully');
+        return view('admin.foods.index')->with('success','food deleted successfully');
     }
 }

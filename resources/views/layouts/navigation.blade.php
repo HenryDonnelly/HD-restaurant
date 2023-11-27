@@ -17,16 +17,28 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @if(auth()->user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.foods.index')" :active="request()->routeIs('admin.foods.index')">
+                            {{ __('All foods') }}
+                        </x-nav-link>
+                        @elseif(auth()->user()->hasRole('user'))
+                        <x-nav-link :href="route('user.foods.index')" :active="request()->routeIs('user.foods.index')">
+                            {{ __('All foods') }}
+                        </x-nav-link>
+                    @else
                     <x-nav-link :href="route('foods.index')" :active="request()->routeIs('foods.index')">
-                        {{ __('All Food') }}
+                        {{ __('All foods') }}
                     </x-nav-link>
+                @endif
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('foods.create')" :active="request()->routeIs('foods.create')">
-                        {{ __('Create Food') }}
-                    </x-nav-link>
+                    @if(auth()->user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.foods.create')" :active="request()->routeIs('admin.foods.create')">
+                            {{ __('Create food') }}
+                        </x-nav-link>
+
+                    @endif
                 </div>
-            </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
