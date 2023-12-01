@@ -1,8 +1,13 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('All foods') }}
+        </h2>
+    </x-slot>
 
-@section('content')
+
     <h3 class="text-center">Create food</h3>
-    <form action="{{ route('admin.foods.update', $food)}}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.foods.update', $food->id)}}" method="POST" enctype="multipart/form-data">
         @method('put')
         @csrf
         <div class="form-group">
@@ -66,6 +71,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
-@endsection
+</x-app-layout>
 
 

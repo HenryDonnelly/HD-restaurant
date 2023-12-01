@@ -16,6 +16,10 @@ class Food extends Model
         'price',
         'best_before',
         'picture'];
+        public function supplier()
+        {
+            return $this->belongsTo(Supplier::class);
+        }
 }
 
 // to view all books

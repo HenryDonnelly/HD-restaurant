@@ -10,9 +10,14 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     * @return void
      */
-    public function run(): void
+
+    public function run()
     {
+        // $this->call(RoleSeeder::class);
+        // $this->call(UserSeeder::class);
+        $this->call(SupplierSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // Food::factory(10)->create();
@@ -22,9 +27,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Food::factory()->count(50)->create();
-        $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
+        // Food::factory()->count(50)->create();
+        // $this->call(RoleSeeder::class);
+        // $this->call(UserSeeder::class);
     }
 }
 

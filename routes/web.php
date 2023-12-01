@@ -39,5 +39,5 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/admin/foods', AdminFoodController::class)->middleware(['auth'])->names('admin.foods');
 Route::resource('/user/foods', UserFoodController::class)->middleware(['auth'])->names('user.foods')->only(['index','show']);
-
+Route::post('/admin/foods', [FoodController::class, 'store'])->name('admin.foods.store');
 require __DIR__.'/auth.php';

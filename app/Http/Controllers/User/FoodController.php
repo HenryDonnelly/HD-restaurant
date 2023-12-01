@@ -15,7 +15,7 @@ class FoodController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user = authorization('user');
+        $user->authorizeRoles('user');
         $foods=Food::paginate(10);
         return view('user.foods.index')->with('foods',$foods);
     }
@@ -26,9 +26,7 @@ class FoodController extends Controller
     public function show(Food $food)
     {
         $user=Auth::user();
-      $user->authorizeRoles('user');
+        $user->authorizeRoles('user');
         return view('user.foods.show')->with('food', $food);
     }
-
-
 }

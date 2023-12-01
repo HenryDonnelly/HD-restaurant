@@ -64,7 +64,7 @@ class FoodController extends Controller
             'updated_at' => now(),
         ]);
 
-        return to_route('admin.foods.index') ->with ('success','food stored');
+        return redirect()->route('admin.foods.index')->with('success','food stored');
     }
 
     /**
@@ -73,7 +73,7 @@ class FoodController extends Controller
     public function show(Food $food)
     {
         $user=Auth::user();
-      $user->authorizeRoles('admin');
+        $user->authorizeRoles('admin');
         return view('admin.foods.show')->with('food', $food);
     }
 
@@ -112,15 +112,15 @@ class FoodController extends Controller
          }
 
          $food->update([
-             'name' => $request->name,
-             'category' => $request->category,
-             'description' => $request->description,
-             'price' => $request->price,
-             'best_before' => $request->best_before,
+             'name' => $request->input('name'),
+             'category' => $request->input('category'),
+             'description' => $request->input('description'),
+             'price' => $request->input('price'),
+             'best_before' => $request->input('best_before'),
              'picture' => $food_picture_name,
          ]);
 
-         return redirect()->route('foods.show', $food)->with('success', 'Food successfully updated');
+         return redirect()->route('admin.foods.index')->with('success', 'Food successfully updated');
      }
     /**
      * Remove the specified resource from storage.
