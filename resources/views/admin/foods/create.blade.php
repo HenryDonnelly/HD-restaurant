@@ -32,6 +32,9 @@
                     <x-file-input type="file" name="picture" placeholder="Food" class="w-full mt-6" field="picture"
                         :value="@old('picture')">>
                     </x-file-input>
+                    <div class="mt-6">
+                        <x-select-supplier name="supplier_id" :suppliers="$suppliers" :selected="old('supplier_id')"/>
+                    </div>
                     <x-primary-button class="mt-6">Save Book</x-primary-button>
                 </form>
             </div>

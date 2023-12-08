@@ -27,6 +27,9 @@
                     <td><strong> category </strong> </td>
                     <td>{{ $food->category }}</td>
                 </tr>
+                <tr>
+                    <td><strong>Supplier Name</strong></td>
+                    <td>{{ $food->supplier->name }}</td>
 
                 <tr>
                     <td><strong> description </strong> </td>

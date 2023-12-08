@@ -16,6 +16,7 @@ class Food extends Model
         'description',
         'price',
         'best_before',
+        'supplier_id',
         'picture',
     ];
         public function supplier()

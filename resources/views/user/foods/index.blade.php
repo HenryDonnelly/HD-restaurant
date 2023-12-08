@@ -17,6 +17,9 @@
                     </h2>
                     <p class="mt-2">
 
+                        <h3 class="font-bold text-1xl"><strong>Supplier name</strong>
+                            {{ $food->supplier->name }} </h3>
+
                         {{ $food->description }}
                         {{ $food->category }}
                         {{ $food->price }}

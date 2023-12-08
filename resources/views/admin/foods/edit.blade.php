@@ -1,76 +1,45 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('All foods') }}
+            {{ __('Edit Food') }}
         </h2>
     </x-slot>
 
 
-    <h3 class="text-center">Create food</h3>
-    <form action="{{ route('admin.foods.update', $food->id)}}" method="POST" enctype="multipart/form-data">
-        @method('put')
-        @csrf
-        <div class="form-group">
-            <label for="name">Food Name</label>
-            <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                   value="{{ old('name') }}" placeholder="Enter name">
-            @if($errors->has('name'))
-                <span class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </span>
-            @endif
+    <div class="py-12">
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
+                <form action="{{ route('admin.foods.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <x-text-input type="text" name="name" field="name" placeholder="name" class="w-full"
+                        autocomplete="off" :value="@old('name')">
+                    </x-text-input>
+                    <x-text-input type="text" name="category" field="category" placeholder="category..."
+                        class="w-full mt-6" :value="@old('category')">
+                    </x-text-input>
+                    <x-text-input type="text" name="description" field="description" placeholder="description..."
+                        class="w-full mt-6" :value="@old('description')">
+                    </x-text-input>
+
+                    <x-text-input type="text" name="price" field="price" placeholder="price..."
+                        class="w-full mt-6" :value="@old('price')">
+                    </x-text-input>
+                    <x-text-input type="text" name="best_before" field="best_before" placeholder="best_before..."
+                        class="w-full mt-6" :value="@old('best_before')">
+                    </x-text-input>
+
+                    <x-file-input type="file" name="picture" placeholder="Food" class="w-full mt-6" field="picture"
+                        :value="@old('picture')">>
+                    </x-file-input>
+                    <div class="mt-6">
+                        <x-select-supplier name="supplier_id" :suppliers="$suppliers" :selected="old('supplier_id')"/>
+                    </div>
+                    <x-primary-button class="mt-6">Save Book</x-primary-button>
+                </form>
+            </div>
+
         </div>
-        <div class="form-group">
-            <label for="category">Food Category</label>
-            <input type="text" name="category" id="category" class="form-control {{ $errors->has('category') ? 'is-invalid' : '' }}"
-                   value="{{ old('category') }}" placeholder="Enter food category">
-            @if($errors->has('category'))
-                <span class="invalid-feedback">
-                    {{ $errors->first('category') }}
-                </span>
-            @endif
-        </div>
-        <div class="form-group">
-            <label for="description">Food Description</label>
-            <textarea name="description" id="description" rows="4" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                      placeholder="Enter food description">{{ old('description') }}</textarea>
-            @if($errors->has('description'))
-                <span class="invalid-feedback">
-                    {{ $errors->first('description') }}
-                </span>
-            @endif
-        </div>
-        <div class="form-group">
-            <label for="price">Food Price</label>
-            <input type="text" name="price" id="price" class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}"
-                   value="{{ old('price') }}" placeholder="Enter food price">
-            @if($errors->has('price'))
-                <span class="invalid-feedback">
-                    {{ $errors->first('price') }}
-                </span>
-            @endif
-        </div>
-        <div class="form-group">
-            <label for="best_before">Food Best Before Date</label>
-            <input type="text" name="best_before" id="best_before" class="form-control {{ $errors->has('best_before') ? 'is-invalid' : '' }}"
-                   value="{{ old('best_before') }}" placeholder="Enter food best_before date">
-            @if($errors->has('best_before'))
-                <span class="invalid-feedback">
-                    {{ $errors->first('best_before') }}
-                </span>
-            @endif
-        </div>
-        <div class="form-group">
-            <label for="picture">Food picture</label>
-            <input type="file" name="picture" id="picture" class="form-control {{ $errors->has('picture') ? 'is-invalid' : '' }}">
-            @if($errors->has('picture'))
-                <span class="invalid-feedback">
-                    {{ $errors->first('picture') }}
-                </span>
-            @endif
-        </div>
-        <button type="submit" class="btn btn-primary">Create</button>
-    </form>
+    </div>
+
 </x-app-layout>
-
-
