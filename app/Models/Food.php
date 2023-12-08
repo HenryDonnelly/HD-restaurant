@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Supplier;
 
 class Food extends Model
 {
@@ -15,34 +16,12 @@ class Food extends Model
         'description',
         'price',
         'best_before',
-        'picture'];
+        'picture',
+    ];
         public function supplier()
         {
             return $this->belongsTo(Supplier::class);
         }
 }
 
-// to view all books
-
-// $foods = Food::all();
-// $foods->toArray();
-
-// $books = App\Models\Book::all();
-// $books->toArray();
-
-
-// $books = App\Models\Book::orderBy('title','asc')->get();
-// $books->toArray();
-
-// $books = App\Models\Book::where('category','Fiction')->get();
-// $books->toArray();
-
-// $book = App\Models\Book::find(1);
-// $book->toArray();
-
-// $books = App\Models\Book::take(5)->get();
-// $books->toArray();
-
-// $books = App\Models\Book::inRandomOrder()->take(3)->get();
-// $books->toArray();
 

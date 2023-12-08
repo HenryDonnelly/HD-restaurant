@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('foods', function (Blueprint $table) {
+        Schema::table('food', function (Blueprint $table) {
             $table->unsignedBigInteger('supplier_id');
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onUpdate('cascade')->onDelete('restrict');
         });
@@ -24,9 +24,9 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::table('foods', function (Blueprint $table) {
-            $table->dropForeign(['publisher_id']);
-            $table->dropColumn('publsher_id');
+        Schema::table('food', function (Blueprint $table) {
+            $table->dropForeign(['supplier_id']);
+            $table->dropColumn('supplier_id');
         });
     }
 };

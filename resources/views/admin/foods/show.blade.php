@@ -52,7 +52,7 @@
 
             </tbody>
         </table>
-        <a href="{{ route('admin.foods.edit', $food) }}">Edit</a>
+      <x-primary-button>  <a href="{{ route('admin.foods.edit', $food) }}">Edit</a></x-primary-button>
         <form action="{{ route('admin.foods.destroy', $food) }}" method="post">
             @method('delete')
             @csrf

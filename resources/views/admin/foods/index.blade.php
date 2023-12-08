@@ -9,13 +9,16 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <a href="{{ route('admin.foods.create') }}" class="btn-link btn-lg mb-2">Add a food</a>
+            <x-primary-button><a href="{{ route('admin.foods.create') }}" class="btn-link btn-lg mb-2">Add a food</a></x-primary-button>
             @forelse ($foods as $food)
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
                     <h2 class="font-bold text-2xl">
                         <a href="{{ route('admin.foods.show', $food) }}">{{ $food->name }}</a>
                     </h2>
                     <p class="mt-2">
+
+                        <h3 class="font-bold text-1xl"><strong>Supplier name</strong>
+                            {{ $food->supplier->name }} </h3>
 
                         {{ $food->description }}
                         {{ $food->category }}
@@ -40,44 +43,4 @@
 </x-app-layout>
 
 
-{{--
- @extends('layouts.app')
-@section('content')
-    <div class="container">
-        <h1>All foods</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Best_before</th>
-                    <th>Picture</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($foods as $food)
-                    <tr>
-                        <td><a href="{{ route ('admin.foods.show', $food)}}">{{ $food->name }}</a></td>
-                        <td>{{ $food->description }}</td>
-                        <td>{{ $food->category }}</td>
-                        <td>{{ $food->price }}</td>
-                        <td>{{ $food->best_before }}</td>
-                        <td>
-                            @if ($food->picture)
-                                <img src="{{ $food->picture }}" alt="{{ $food->name }}" width="100">
-                            @else
-                                No Image
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
 
-
-
-
-@endsection --}}

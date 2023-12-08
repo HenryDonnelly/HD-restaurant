@@ -25,6 +25,7 @@ class FoodFactory extends Factory
             'created_at' => now(),
             'updated_at' => now(),
             'picture' =>fake()->imageUrl,
+            'supplier_id' => 1,
         ];
     }
 }

@@ -15,9 +15,16 @@ class DatabaseSeeder extends Seeder
 
     public function run()
     {
-        // $this->call(RoleSeeder::class);
-        // $this->call(UserSeeder::class);
         $this->call(SupplierSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
+
+    }
+}
+
+
+
+
         // \App\Models\User::factory(10)->create();
 
         // Food::factory(10)->create();
@@ -30,6 +37,3 @@ class DatabaseSeeder extends Seeder
         // Food::factory()->count(50)->create();
         // $this->call(RoleSeeder::class);
         // $this->call(UserSeeder::class);
-    }
-}
-

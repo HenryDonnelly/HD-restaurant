@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Food;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,10 @@ class FoodController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
-        $foods=Food::paginate(10);
+        // $foods=Food::paginate(10);
+        // eager loading
+        $foods=Food::with('supplier')->get();
+
         return view('admin.foods.index')->with('foods',$foods);
     }
 
