@@ -8,7 +8,7 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class FoodController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +19,9 @@ class FoodController extends Controller
         $user->authorizeRoles('admin');
         // $foods=Food::paginate(10);
         // eager loading
-        $foods=Food::with('supplier')->get();
+        $suppliers=Supplier::with('foods')->get();
 
-        return view('admin.foods.index')->with('foods',$foods);
+        return view('admin.suppliers.index')->with('suppliers',$suppliers);
     }
 
     /**
@@ -33,7 +33,7 @@ class FoodController extends Controller
         $user->authorizeRoles('admin');
 
         $suppliers = Supplier::all();
-        return view('admin.foods.create')->with('suppliers',$suppliers);
+        return view('admin.suppliers.create')->with('suppliers',$suppliers);
     }
 
     /**
@@ -43,33 +43,14 @@ class FoodController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'category' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'best_before' => 'required',
-            'picture' => 'nullable|image|mimes:jpeg,png,bmp,jpg,gif|max:2048',
-            'supplier_id' => 'required',
+            'address' => 'required',
+            'phone_no' => 'required',
         ]);
 
-        $food_picture_name = null;
-
-        if ($request->hasFile('picture')) {
-            $picture = $request->file('picture');
-            $pictureName = time() . '.' . $picture->extension();
-            $picture->storeAs('public/foods', $pictureName);
-            $food_picture_name = 'storage/foods/' . $pictureName;
-        }
-
-        Food::create([
+        Supplier::create([
             'name' => $request->name,
-            'category' => $request->category,
-            'description' => $request->description,
-            'price' => $request->price,
-            'best_before' => $request->best_before,
-            'supplier_id',
-            'picture' => $food_picture_name,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'address' => $request->address,
+            'phone_no' => $request->phone_no,
         ]);
 
         return redirect()->route('admin.foods.index')->with('success','food stored');
@@ -78,29 +59,36 @@ class FoodController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Food $food)
-    {
+    public function show(Supplier $supplier)
+   {
         $user=Auth::user();
         $user->authorizeRoles('admin');
-        return view('admin.foods.show')->with('food', $food);
+
+        if (!Auth::id()){
+            return abort(403);
+        }
+
+        $foods=$supplier->foods;
+
+        return view('admin.suppliers.show', compact('supplier', 'foods'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Food $food)
+    public function edit(Supplier $supplier)
     {
-      //  $food = Food::get($food->id);
+      //  $supplier = supplier::get($supplier->id);
     //   $user=Auth::user();
     //   $user->authorizeRoles('admin');
     //   $suppliers=Supplier::all();
-    //     return view('admin.foods.edit')->with('food', $food,'suppliers',$suppliers);
+    //     return view('admin.suppliers.edit')->with('supplier', $supplier,'suppliers',$suppliers);
     {
         $user=Auth::user();
         $user->authorizeRoles('admin');
 
         $suppliers = Supplier::all();
-        return view('admin.foods.edit')->with('suppliers',$suppliers);
+        return view('admin.suppliers.edit')->with('suppliers',$suppliers);
     }
 
     }
@@ -109,7 +97,7 @@ class FoodController extends Controller
      * Update the specified resource in storage.
      */
 
-     public function update(Request $request, Food $food)
+     public function update(Request $request, Supplier $supplier)
      {
          $request->validate([
              'name' => 'required',
@@ -144,11 +132,11 @@ class FoodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Food $food)
+    public function destroy(Supplier $supplier)
     {
         $user=Auth::user();
       $user->authorizeRoles('admin');
-        $food->delete();
-        return view('admin.foods.index')->with('success','food deleted successfully');
+        $supplier->delete();
+        return view('admin.suppliers.index')->with('success','supplier deleted successfully');
     }
 }

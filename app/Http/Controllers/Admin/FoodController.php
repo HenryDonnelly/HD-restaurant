@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Food;
 use App\Models\Supplier;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +34,8 @@ class FoodController extends Controller
         $user->authorizeRoles('admin');
 
         $suppliers = Supplier::all();
-        return view('admin.foods.create')->with('suppliers',$suppliers);
+        $restaurants=Restaurant::all();
+        return view('admin.foods.create')->with('suppliers',$suppliers)->with('restaurants',$restaurants);
     }
 
     /**
@@ -49,6 +51,7 @@ class FoodController extends Controller
             'best_before' => 'required',
             'picture' => 'nullable|image|mimes:jpeg,png,bmp,jpg,gif|max:2048',
             'supplier_id' => 'required',
+            'restaurants'=>['required','exists:restaurants_id']
         ]);
 
         $food_picture_name = null;
@@ -72,7 +75,9 @@ class FoodController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('admin.foods.index')->with('success','food stored');
+        $food->restaurants()->attach($request->restaurants);
+
+        return to_route('admin.foods.index');
     }
 
     /**

@@ -35,6 +35,16 @@
                     <div class="mt-6">
                         <x-select-supplier name="supplier_id" :suppliers="$suppliers" :selected="old('supplier_id')"/>
                     </div>
+                    <div class="form-group">
+                        <label for="restaurants"><strong>restaurants</strong> <br></label>
+                        @foreach ($restaurants as $restaurant)
+                        <input type="checkbox",value="{{$restaurant->id}}" name="authors[]">
+                        {{$restaurant->name}}
+                        @endforeach
+                    </div>
+                    </>
+
+                        
                     <x-primary-button class="mt-6">Save Book</x-primary-button>
                 </form>
             </div>

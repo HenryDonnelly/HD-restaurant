@@ -6,18 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Food;
 
-class Supplier extends Model
+class Restaurant extends Model
 {
     use HasFactory;
-
     protected $fillable =[
-        'name',
-        'address',
-        'phone_no',
+      'name',
+      'address',
+      'bio'
     ];
-    
     public function foods()
     {
-        return $this->hasMany(Food::class);
+        return $this->belongsToMany(Food::class)->withTimeStamps();
     }
 }

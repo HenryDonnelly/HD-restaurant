@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FoodController as AdminFoodController;
 use App\Http\Controllers\User\FoodController as UserFoodController;
+use App\Http\Controllers\User\SupplierController as UserSupplierController;
+use App\Http\Controllers\Admin\SupplierController as AdminSupplierController;
+
 
 
 /*
@@ -39,5 +42,8 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/admin/foods', AdminFoodController::class)->middleware(['auth'])->names('admin.foods');
 Route::resource('/user/foods', UserFoodController::class)->middleware(['auth'])->names('user.foods')->only(['index','show']);
-Route::post('/admin/foods', [FoodController::class, 'store'])->name('admin.foods.store');
+Route::resource('/admin/suppliers', AdminSupplierController::class)->middleware(['auth'])->names('admin.suppliers');
+Route::resource('/user/suppliers', UserSupplierController::class)->middleware(['auth'])->names('user.suppliers')->only(['index','show']);
+Route::post('/admin/foods', [AdminFoodController::class, 'store'])->name('admin.foods.store');
+
 require __DIR__.'/auth.php';

@@ -50,7 +50,12 @@
                     <td><strong> picture </strong> </td>
                     <td><img src="{{ asset($food->picture) }}" class="img-fluid" alt="food Image"></td>
                 </tr>
-
+                @foreach($food->restaurants as $restaurant)
+                <tr>
+                    <td class="font-bold">Restaurant</td>
+                    <td> {{$restaurant->name}}</td>
+                </tr>
+              @endforeach
 
 
             </tbody>
