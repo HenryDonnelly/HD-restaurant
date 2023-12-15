@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\FoodController as AdminFoodController;
 use App\Http\Controllers\User\FoodController as UserFoodController;
 use App\Http\Controllers\User\SupplierController as UserSupplierController;
 use App\Http\Controllers\Admin\SupplierController as AdminSupplierController;
+use App\Http\Controllers\User\RestaurantController as UserRestaurantController;
+use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
 
 
 
@@ -44,6 +46,9 @@ Route::resource('/admin/foods', AdminFoodController::class)->middleware(['auth']
 Route::resource('/user/foods', UserFoodController::class)->middleware(['auth'])->names('user.foods')->only(['index','show']);
 Route::resource('/admin/suppliers', AdminSupplierController::class)->middleware(['auth'])->names('admin.suppliers');
 Route::resource('/user/suppliers', UserSupplierController::class)->middleware(['auth'])->names('user.suppliers')->only(['index','show']);
-Route::post('/admin/foods', [AdminFoodController::class, 'store'])->name('admin.foods.store');
+Route::resource('/admin/restaurants', AdminRestaurantController::class)->middleware(['auth'])->names('admin.restaurants');
+Route::resource('/user/restaurants', UserRestaurantController::class)->middleware(['auth'])->names('user.restaurants')->only(['index','show']);
+// Route::post('/admin/foods', [AdminFoodController::class, 'store'])->name('admin.foods.store');
+// Route::post('/admin/foods', [AdminFoodController::class, 'store'])->name('admin.foods.store');
 
 require __DIR__.'/auth.php';

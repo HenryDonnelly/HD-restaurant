@@ -25,6 +25,9 @@
                     <x-text-input type="text" name="price" field="price" placeholder="price..."
                         class="w-full mt-6" :value="@old('price')">
                     </x-text-input>
+                    <div class="mt-6">
+                        <x-select-supplier name="supplier_id" :suppliers="$suppliers" :selected="old('supplier_id')"/>
+                    </div>
                     <x-text-input type="text" name="best_before" field="best_before" placeholder="best_before..."
                         class="w-full mt-6" :value="@old('best_before')">
                     </x-text-input>
@@ -32,19 +35,17 @@
                     <x-file-input type="file" name="picture" placeholder="Food" class="w-full mt-6" field="picture"
                         :value="@old('picture')">>
                     </x-file-input>
-                    <div class="mt-6">
-                        <x-select-supplier name="supplier_id" :suppliers="$suppliers" :selected="old('supplier_id')"/>
-                    </div>
+
                     <div class="form-group">
                         <label for="restaurants"><strong>restaurants</strong> <br></label>
                         @foreach ($restaurants as $restaurant)
-                        <input type="checkbox",value="{{$restaurant->id}}" name="authors[]">
-                        {{$restaurant->name}}
+                        <input type="checkbox",value="{{$restaurant->id}}" name="restaurants[]">
+                        {{$restaurant->id}}
                         @endforeach
                     </div>
-                    </>
+</>
 
-                        
+
                     <x-primary-button class="mt-6">Save Book</x-primary-button>
                 </form>
             </div>

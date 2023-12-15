@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('All foods') }}
+            {{ __('All restaurants') }}
         </h2>
     </x-slot>
 
@@ -10,22 +10,22 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
 
-            @forelse ($foods as $food)
+            @forelse ($restaurants as $restaurant)
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
                     <h2 class="font-bold text-2xl">
-                        <a href="{{ route('user.foods.show', $food) }}">{{ $food->name }}</a>
+                        <a href="{{ route('user.restaurants.show', $restaurant) }}">{{ $restaurant->name }}</a>
                     </h2>
                     <p class="mt-2">
 
                         <h3 class="font-bold text-1xl"><strong>Supplier name</strong>
-                            {{ $food->supplier->name }} </h3>
+                            {{ $restaurant->supplier->name }} </h3>
 
-                        {{ $food->description }}
-                        {{ $food->category }}
-                        {{ $food->price }}
-                        {{ $food->best_before }}
-                        @if ($food->picture)
-                            <img src="{{ $food->picture }}" alt="{{ $food->name }}" width="100">
+                        {{ $restaurant->description }}
+                        {{ $restaurant->category }}
+                        {{ $restaurant->price }}
+                        {{ $restaurant->best_before }}
+                        @if ($restaurant->picture)
+                            <img src="{{ $restaurant->picture }}" alt="{{ $restaurant->name }}" width="100">
                         @else
                             No Image
                         @endif
@@ -33,7 +33,7 @@
 
                 </div>
             @empty
-                <p>No foods</p>
+                <p>No restaurants</p>
             @endforelse
 
         </div>
@@ -47,7 +47,7 @@
  @extends('layouts.app')
 @section('content')
     <div class="container">
-        <h1>All foods</h1>
+        <h1>All restaurants</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -60,16 +60,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($foods as $food)
+                @foreach ($restaurants as $restaurant)
                     <tr>
-                        <td><a href="{{ route ('user.foods.show', $food)}}">{{ $food->name }}</a></td>
-                        <td>{{ $food->description }}</td>
-                        <td>{{ $food->category }}</td>
-                        <td>{{ $food->price }}</td>
-                        <td>{{ $food->best_before }}</td>
+                        <td><a href="{{ route ('user.restaurants.show', $restaurant)}}">{{ $restaurant->name }}</a></td>
+                        <td>{{ $restaurant->description }}</td>
+                        <td>{{ $restaurant->category }}</td>
+                        <td>{{ $restaurant->price }}</td>
+                        <td>{{ $restaurant->best_before }}</td>
                         <td>
-                            @if ($food->picture)
-                                <img src="{{ $food->picture }}" alt="{{ $food->name }}" width="100">
+                            @if ($restaurant->picture)
+                                <img src="{{ $restaurant->picture }}" alt="{{ $restaurant->name }}" width="100">
                             @else
                                 No Image
                             @endif

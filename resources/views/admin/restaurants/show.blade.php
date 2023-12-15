@@ -1,33 +1,49 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $restaurant->name }} - Books by this restaurant
+            {{ __('All restaurants') }}
         </h2>
     </x-slot>
 
+
+
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            <!-- Display publisher details -->
-
-            <h3 class="font-bold text-2xl mb-4">restaurant Details</h3>
-            <p class="text-gray-700"><span class="font-bold">ID:</span> {{ $restaurant->name }}</p>
-            <p class="text-gray-700"><span class="font-bold">Name:</span> {{ $restaurant->address }}</p>
-            <p class="text-gray-700"><span class="font-bold">Address:</span> {{ $restaurant->phone_no }}</p>
-
-            <!-- Display books for the publisher -->
-
-            <h3 class="font-bold text-2xl mt-6 mb-4">Books by {{ $restaurant->name }}</h3>
-
-            @forelse ($books as $book)
-                <x-card>
-                     <a href="{{ route('admin.foods.show', $book) }}" class="font-bold text-2xl">{{ $food->name }}</a>
-
-                </x-card>
-            @empty
-                <p>No foods for this author</p>
-            @endforelse
-
+        <div class="max-w-7x1 mx-auto sm:px-6 lg:px-8">
+            <x-alert-success>
+                {{ session('success') }}
+            </x-alert-success>
         </div>
+    </div>
+    <div class="container">
+        <h1>view restaurant</h1>
+        <table class="table table-hover">
+            <tbody>
+
+                <tr>
+                    <td><strong> Name </strong> </td>
+                    <td>{{ $restaurant->name }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong> address </strong> </td>
+                    <td>{{ $restaurant->address }}</td>
+                </tr>
+
+                    <td><strong> phone_no </strong> </td>
+                    <td>{{ $restaurant->phone_no }}</td>
+                </tr>
+
+
+
+            </tbody>
+        </table>
+      <x-primary-button>  <a href="{{ route('admin.restaurants.edit', $restaurant) }}">Edit</a></x-primary-button>
+        <form action="{{ route('admin.restaurants.destroy', $restaurant) }}" method="post">
+            @method('delete')
+            @csrf
+            <x-primary-button onclick="return confirm('are you sure you want to delete?')">Delete</x-primary-button>
+        </form>
+    </div>
+
     </div>
 </x-app-layout>

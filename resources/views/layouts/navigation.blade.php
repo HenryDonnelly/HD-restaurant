@@ -32,6 +32,19 @@
                 @endif
                 </div>
 
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @if(auth()->user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.restaurants.index')" :active="request()->routeIs('admin.restaurants.index')">
+                            {{ __('All restaurants') }}
+                        </x-nav-link>
+                        @elseif(auth()->user()->hasRole('user'))
+                    @else
+                    <x-nav-link :href="route('foods.index')" :active="request()->routeIs('foods.index')">
+                        {{ __('All foods') }}
+                    </x-nav-link>
+                @endif
+                </div>
+
 {{-- // supplier stuff // --}}
 
 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -39,14 +52,8 @@
         <x-nav-link :href="route('admin.suppliers.index')" :active="request()->routeIs('admin.suppliers.index')">
             {{ __('All suppliers') }}
         </x-nav-link>
-        @elseif(auth()->user()->hasRole('user'))
-        <x-nav-link :href="route('user.suppliers.index')" :active="request()->routeIs('user.suppliers.index')">
-            {{ __('All suppliers') }}
-        </x-nav-link>
-    @else
-    <x-nav-link :href="route('suppliers.index')" :active="request()->routeIs('suppliers.index')">
-        {{ __('All suppliers') }}
-    </x-nav-link>
+
+
 @endif
 </div>
 

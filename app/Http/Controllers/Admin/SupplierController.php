@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Food;
 use App\Models\Supplier;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -101,30 +102,14 @@ class SupplierController extends Controller
      {
          $request->validate([
              'name' => 'required',
-             'category' => 'required',
-             'description' => 'required',
-             'price' => 'required',
-             'best_before' => 'required',
-             'suppliers'=>'suppliers',
+             'address' => 'required',
+             'phone_no' => 'required',
          ]);
 
-         $food_picture_name = $food->picture;
-
-         if ($request->hasFile('picture')) {
-             $picture = $request->file('picture');
-             $pictureName = time() . '.' . $picture->extension();
-             $picture->storeAs('public/foods', $pictureName);
-             $food_picture_name = 'storage/foods/' . $pictureName;
-         }
-
-         $food->update([
+         $supplier->update([
              'name' => $request->input('name'),
-             'category' => $request->input('category'),
-             'description' => $request->input('description'),
-             'price' => $request->input('price'),
-             'best_before' => $request->input('best_before'),
-             'supplier'=> $request->input('supplier_id'),
-             'picture' => $food_picture_name,
+             'address' => $request->input('address'),
+             'phone_no' => $request->input('phone_no'),
          ]);
 
          return redirect()->route('admin.foods.index')->with('success', 'Food successfully updated');

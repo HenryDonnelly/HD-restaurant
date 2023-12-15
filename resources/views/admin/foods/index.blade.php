@@ -24,11 +24,9 @@
                         {{ $food->category }}
                         {{ $food->price }}
                         {{ $food->best_before }}
-                        @if ($food->picture)
-                            <img src="{{ $food->picture }}" alt="{{ $food->name }}" width="100">
-                        @else
-                            No Image
-                        @endif
+                        {{-- {{$food->restaurant->name}} --}}
+
+                            <img src="{{ asset($food->picture) }}" class="img-fluid" alt="food Image">
                     </p>
 
                 </div>

@@ -43,15 +43,16 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'category' => 'required',
             'description' => 'required',
             'price' => 'required',
+            'supplier_id' => 'required',
             'best_before' => 'required',
             'picture' => 'nullable|image|mimes:jpeg,png,bmp,jpg,gif|max:2048',
-            'supplier_id' => 'required',
-            'restaurants'=>['required','exists:restaurants_id']
+            // 'restaurants'=>['required','exists:restaurants, id']
         ]);
 
         $food_picture_name = null;
@@ -63,21 +64,22 @@ class FoodController extends Controller
             $food_picture_name = 'storage/foods/' . $pictureName;
         }
 
-        Food::create([
+        $food = Food::create([
             'name' => $request->name,
             'category' => $request->category,
             'description' => $request->description,
             'price' => $request->price,
             'best_before' => $request->best_before,
-            'supplier_id',
+            'supplier_id' => $request->supplier_id,
             'picture' => $food_picture_name,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+// restaurants are not being passed the correct info
 
-        $food->restaurants()->attach($request->restaurants);
+        // $food->restaurants()->attach($request->restaurants);
 
-        return to_route('admin.foods.index');
+        return to_route('admin.foods.index')->with('Success', "Yay");
     }
 
     /**
@@ -105,7 +107,7 @@ class FoodController extends Controller
         $user->authorizeRoles('admin');
 
         $suppliers = Supplier::all();
-        return view('admin.foods.edit')->with('suppliers',$suppliers);
+        return view('admin.foods.edit', compact('food','suppliers'));
     }
 
     }
@@ -122,10 +124,9 @@ class FoodController extends Controller
              'description' => 'required',
              'price' => 'required',
              'best_before' => 'required',
-             'suppliers'=>'suppliers',
+             'suppliers'=>'required',
          ]);
 
-         $food_picture_name = $food->picture;
 
          if ($request->hasFile('picture')) {
              $picture = $request->file('picture');
@@ -135,16 +136,19 @@ class FoodController extends Controller
          }
 
          $food->update([
-             'name' => $request->input('name'),
-             'category' => $request->input('category'),
-             'description' => $request->input('description'),
-             'price' => $request->input('price'),
-             'best_before' => $request->input('best_before'),
-             'supplier'=> $request->input('supplier_id'),
-             'picture' => $food_picture_name,
+             'name' => $request->name,
+             'category' => $request->category,
+             'description' => $request->description,
+             'price' => $request->price,
+             'best_before' => $request->best_before,
+             'suppliers'=> $request->supplier_id,
+             'picture'=>$request->picture,
+             'suppliers'=>$request->supplier_id,
+             'created_at'=>now(),
+             'updated_at'=>now()
          ]);
 
-         return redirect()->route('admin.foods.index')->with('success', 'Food successfully updated');
+         return to_route('admin.foods.show',['supplier' => $food->id])->with('success', 'Food successfully updated');
      }
     /**
      * Remove the specified resource from storage.
@@ -152,7 +156,7 @@ class FoodController extends Controller
     public function destroy(Food $food)
     {
         $user=Auth::user();
-      $user->authorizeRoles('admin');
+        $user->authorizeRoles('admin');
         $food->delete();
         return view('admin.foods.index')->with('success','food deleted successfully');
     }

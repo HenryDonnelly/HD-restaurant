@@ -36,10 +36,7 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $restaurant)
     {
-        $user=Auth::user();
-        $user->authorizeRoles('admin');
-        $foods=$restaurant->foods;
-        return view('admin.restaurants.show'), compact('restaurant', 'foods');
+     
     }
 
     /**
